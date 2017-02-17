@@ -13,22 +13,29 @@ export default class AppWindow extends Component {
   }
 
   handleMouseMove = (e) => {
+    /*
     console.log('Координаты', e.clientX, ' ', e.clientY);
     console.log('Нажата ctrl ctrlKey:', e.ctrlKey ? 'да' : 'нет');
     console.log('Нажата ctrl altKey:', e.altKey ? 'да' : 'нет');
-    console.log('Нажата ctrl shiftKey:', e.shiftKey ? 'да' : 'нет');
+    console.log('Нажата ctrl shiftKey:', e.shiftKey ? 'да' : 'нет'); */
   }
 
 
 
 
   render() {
-    //@todo [отдалённое] Имя класса убрать и убрать из index.html стиль appWindow1
     return (
-      <div onMouseMove={this.handleMouseMove} onWheel={this.handleWheel} className="appWindow" style={{width:'100%', height:'100%',borderColor: 'red', border:'solid'}}>
-        <input type="text" id="one" onKeyPress={this.handleKeyPress}/>
-        <NavToolBar/>
-        <CanvasView/>
+      <div style={{width:600, height:600, backgroundColor:'gray'}}>
+        <div
+          style={{
+            width:500, height:500,
+            display: 'table', borderColor: 'red',
+            border:'solid', borderCollapse: 'collapse'
+          }}
+          onMouseMove={this.handleMouseMove} onWheel={this.handleWheel} >
+          <NavToolBar/>
+          <CanvasView/>
+        </div>
       </div>
     );
   }

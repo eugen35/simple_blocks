@@ -8,7 +8,7 @@ export default class NavToolBar extends Component {
   //@todo Нужно научиться тулбаром заполнять все до конца (на 100%)
   render() {
     return (
-      <div style={{borderColor: 'red', border:'solid', backgroundColor:'silver' }}>
+      <div style={{height: 0, display: 'table-row', borderColor: 'red', border:'solid', backgroundColor:'yellow' }}>
         <ul style={{display: 'inline', paddingLeft: 0}}>
           <li style={{display: 'inline', marginLeft: 10}}>Файл</li>
           <li style={{display: 'inline', marginLeft: 10}}>Выйти</li>
