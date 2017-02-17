@@ -8,11 +8,11 @@ import * as TodoActions from '../actions/TodoActions';
 
 class TodoApp extends Component {
   render() {
-    const { todos, actions } = this.props;
+    const { todos, blocks, actions } = this.props;
     console.log('repa')
     return (
       <div>
-        <AppWindow/>
+        <AppWindow blockChat = {blocks}/>
       </div>
     );
   }
@@ -20,7 +20,8 @@ class TodoApp extends Component {
 
 function mapState(state) {
   return {
-    todos: state.todos
+    todos: state.todos,
+    blocks: state.blocks
   };
 }
 

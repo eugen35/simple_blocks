@@ -7,23 +7,26 @@ export default class Canvas extends Component {
 
 
   render() {
-    const { canvasScale } = this.props
+    //@todo [потенциальный bug] [неожиданное поведение] Возможно в этом месте я затираю элемент canvas (встроен в реакт)
+    //@todo Нужно ещё координаты канваса прокинуть сюда
+    //@todo Возможно canvasScale на координаты канваса тоже не так нужно умножать
+    const { canvas, blocks  } = this.props.blockChat
+    const blockItems = blocks.map((block) =>
+      <Block x={block.x} y={block.y}
+             width = {block.width} height = {block.height}
+             scale = { block.scale }
+             canvasScale = { canvas.canvasScale }
+             backgroundColor = {block.backgroundColor}
+      />
+    )
     return (
       <div style={{
-        backgroundColor:'lightgreen', borderColor: 'yellow', border:'solid',
-        width: 10000, height: 10000 }}>
-        <Block x={100} y={100}
-               width = {50} height = {50}
-               scale = { 1 }
-               canvasScale = { canvasScale }
-               backgroundColor = 'yellow'
-        />
-        <Block x={200} y={200}
-               width = {50} height = {50}
-               scale = { 2 }
-               canvasScale = { canvasScale }
-               backgroundColor = 'orange'
-        />
+        width: canvas.width * canvas.canvasScale,
+        height: canvas.height * canvas.canvasScale,
+        backgroundColor: canvas.backgroundColor,
+        borderColor: 'yellow', border:'solid'
+      }}>
+        { blockItems }
       </div>
     );
   }

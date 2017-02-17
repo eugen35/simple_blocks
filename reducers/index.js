@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import todos from './todos';
+import blocks from './blocks';
 
 const rootReducer = combineReducers({
-  todos
+  todos,
+  blocks
 });
 
 export default rootReducer;

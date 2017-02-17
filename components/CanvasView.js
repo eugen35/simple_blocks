@@ -7,8 +7,8 @@ export default class CanvasView extends Component {
 
 
   render() {
+    const { blockChat } = this.props
     return (
-
         <div style={{
           flexGrow: 1,
           flexShrink: 1,
@@ -16,7 +16,7 @@ export default class CanvasView extends Component {
           overflow: 'scroll',
           backgroundColor: 'lightblue'
         }}>
-          <CanvasDiv canvasScale = { 1 }/>
+          <CanvasDiv blockChat={blockChat}/>
         </div>
 
     );

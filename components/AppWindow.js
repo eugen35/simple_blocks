@@ -24,8 +24,10 @@ export default class AppWindow extends Component {
 
   //Вот сниппет, взятый за основу https://jsfiddle.net/eqcfgaz8/
   render() {
+    const { blockChat } = this.props
+    console.log('ffffffbffffffffffffffffffffflockChat');
+    console.log(blockChat);
     return (
-
         <div
           style={{
             display: 'flex',
@@ -35,9 +37,8 @@ export default class AppWindow extends Component {
           }}
           onMouseMove={this.handleMouseMove} onWheel={this.handleWheel} >
           <NavToolBar/>
-          <CanvasView/>
+          <CanvasView blockChat={blockChat}/>
         </div>
-
     );
   }
 }
