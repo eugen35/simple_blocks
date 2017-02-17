@@ -14,9 +14,15 @@ export default class NavToolBar extends Component {
         flexBasis: 'auto',
         backgroundColor: 'pink'
       }}>
-        <p><b>header</b>
-          <br />
-          <br />(sized to content)</p>
+        <ul style={{display: 'inline', paddingLeft: 0}}>
+          <li style={{display: 'inline', marginLeft: 10}}>Файл</li>
+          <li style={{display: 'inline', marginLeft: 10}}>Выйти</li>
+        </ul>
+        <div style={{display:'flex'}}>
+          <div style={{ width: 30, height: 30, backgroundColor:'gray'}}/>
+          <div style={{width: 30, height: 30, backgroundColor:'lightblue'}}/>
+          <div style={{width: 30, height: 30, backgroundColor:'lightgreen'}}/>
+        </div>
       </div>
     );
   }
