@@ -6,9 +6,14 @@ export default class Block extends Component {
 
 
   render() {
-    const { x, y, width, height, backgroundColor } = this.props
+    const { x, y, width, height, backgroundColor, scale, canvasScale } = this.props
+    //@todo [юзабилити] [средняя срочность] При увеличении canvasScale - координаты должны изменяться в зависомости от того, где див размещён (и от его размера)
     return (
-      <div style = {{ borderColor: 'red', border:'solid', top: y, left: x, width, height, backgroundColor, position: 'relative' }} />
+      <div style = {{
+        borderColor: 'red', border:'solid',
+        top: y * canvasScale, left: x * canvasScale,
+        width: width * scale * canvasScale, height: height * scale * canvasScale, backgroundColor,
+        position: 'relative' }} />
     );
   }
 }

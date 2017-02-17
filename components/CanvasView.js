@@ -16,7 +16,7 @@ export default class CanvasView extends Component {
           overflow: 'scroll',
           backgroundColor: 'lightblue'
         }}>
-          <CanvasDiv/>
+          <CanvasDiv canvasScale = { 1 }/>
         </div>
 
     );
