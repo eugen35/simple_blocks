@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Header from '../components/Header';
 import MainSection from '../components/MainSection';
-import Canvas from '../components/Canvas';
+import AppWindow from '../components/AppWindow';
 import * as TodoActions from '../actions/TodoActions';
 
 class TodoApp extends Component {
@@ -12,7 +12,7 @@ class TodoApp extends Component {
     console.log('repa')
     return (
       <div>
-        <Canvas/>
+        <AppWindow/>
       </div>
     );
   }
