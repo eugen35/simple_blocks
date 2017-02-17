@@ -22,21 +22,22 @@ export default class AppWindow extends Component {
 
 
 
-
+  //Вот сниппет, взятый за основу https://jsfiddle.net/eqcfgaz8/
   render() {
     return (
-      <div style={{width:600, height:600, backgroundColor:'gray'}}>
+
         <div
           style={{
-            width:500, height:500,
-            display: 'table', borderColor: 'red',
-            border:'solid', borderCollapse: 'collapse'
+            display: 'flex',
+            flexFlow: 'column',
+            height: '80%',
+            backgroundColor: 'yellow'
           }}
           onMouseMove={this.handleMouseMove} onWheel={this.handleWheel} >
           <NavToolBar/>
           <CanvasView/>
         </div>
-      </div>
+
     );
   }
 }

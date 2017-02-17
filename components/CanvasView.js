@@ -8,16 +8,17 @@ export default class CanvasView extends Component {
 
   render() {
     return (
-      <div style={{height: 'auto',display: 'table-row' ,borderColor: 'brown', backgroundColor:'lightblue', border:'solid', overflow: 'scroll'}}>
+
         <div style={{
-          height: 400, width:'100%', maxWidth:'100%',
+          flexGrow: 1,
+          flexShrink: 1,
+          flexBasis: 'auto',
           overflow: 'scroll',
-          backgroundColor:'pink'}}>
-          ufhvfdlvhnld
+          backgroundColor: 'lightblue'
+        }}>
           <CanvasDiv/>
-          dvfdvfdv
         </div>
-      </div>
+
     );
   }
 }
