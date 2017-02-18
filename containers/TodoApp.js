@@ -5,14 +5,14 @@ import Header from '../components/Header';
 import MainSection from '../components/MainSection';
 import AppWindow from '../components/AppWindow';
 import * as TodoActions from '../actions/TodoActions';
+import * as BlockChartActions from '../actions/BlockChartActions';
 
 class TodoApp extends Component {
   render() {
-    const { todos, blocks, actions } = this.props;
-    console.log('repa')
+    const { todos, blocks, actions, blockChartActions } = this.props;
     return (
       <div>
-        <AppWindow blockChat = {blocks}/>
+        <AppWindow blockChat = {blocks} blockChartActions = {blockChartActions}/>
       </div>
     );
   }
@@ -27,7 +27,8 @@ function mapState(state) {
 
 function mapDispatch(dispatch) {
   return {
-    actions: bindActionCreators(TodoActions, dispatch)
+    actions: bindActionCreators(TodoActions, dispatch),
+    blockChartActions: bindActionCreators(BlockChartActions, dispatch)
   };
 }
 

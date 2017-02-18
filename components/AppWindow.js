@@ -6,18 +6,18 @@ import CanvasView from './CanvasView'
 
 export default class AppWindow extends Component {
   handleWheel = (e) => {
-    console.log('Направления', e.deltaY < 0 ? 'вверх' : 'вниз' );
-    console.log('Нажата ctrl ctrlKey:', e.ctrlKey ? 'да' : 'нет');
-    console.log('Нажата ctrl altKey:', e.altKey ? 'да' : 'нет');
-    console.log('Нажата ctrl shiftKey:', e.shiftKey ? 'да' : 'нет');
+    //Диаграмму приближаем только при нажатой клавише ctrl и кручении колёсика мыши вниз, а удаляем при ctrl + колёсико мыши вверх
+    e.preventDefault(); //Предотвращаем нативный зум. Возможно, этим мы снижаем производительность проги? [производительность] может нам тока меню перерисовывать - чтоб она уменьшалось обратно пропорционально зуму?
+    if ( e.ctrlKey ) this.props.blockChartActions.chartZoomIn( e.deltaY )
+    //console.log('Направления', e.deltaY < 0 ? 'вверх' : 'вниз' );
   }
 
   handleMouseMove = (e) => {
-    /*
-    console.log('Координаты', e.clientX, ' ', e.clientY);
-    console.log('Нажата ctrl ctrlKey:', e.ctrlKey ? 'да' : 'нет');
-    console.log('Нажата ctrl altKey:', e.altKey ? 'да' : 'нет');
-    console.log('Нажата ctrl shiftKey:', e.shiftKey ? 'да' : 'нет'); */
+    //console.log('Направления', e);
+    e.preventDefault();
+    //Диаграмму двигаем только при нажатой клавише ctrl
+    //if ( e.ctrlKey ) this.props.blockChartActions.chartMove({clientX: e.clientX, clientY: e.clientY})
+    //console.log('Координаты', e.clientX, ' ', e.clientY);
   }
 
 
@@ -35,7 +35,8 @@ export default class AppWindow extends Component {
             height: '80%',
             backgroundColor: 'yellow'
           }}
-          onMouseMove={this.handleMouseMove} onWheel={this.handleWheel} >
+          onMouseMove={this.handleMouseMove}
+          onWheel={this.handleWheel} >
           <NavToolBar/>
           <CanvasView blockChat={blockChat}/>
         </div>

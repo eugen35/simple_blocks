@@ -11,8 +11,9 @@ export default class Canvas extends Component {
     //@todo Нужно ещё координаты канваса прокинуть сюда
     //@todo Возможно canvasScale на координаты канваса тоже не так нужно умножать
     const { canvas, blocks  } = this.props.blockChat
-    const blockItems = blocks.map((block) =>
-      <Block x={block.x} y={block.y}
+    const blockItems = blocks.map((block, index) =>
+      <Block key = {index}
+             x={block.x} y={block.y}
              width = {block.width} height = {block.height}
              scale = { block.scale }
              canvasScale = { canvas.canvasScale }

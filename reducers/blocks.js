@@ -1,50 +1,53 @@
-import { ADD_TODO, DELETE_TODO, EDIT_TODO, MARK_TODO, MARK_ALL, CLEAR_MARKED } from '../constants/ActionTypes';
+import * as types from '../constants/ActionTypes';
 
 const initialState = {
   blocks:[
     {x:100, y:150, width:50, height:50, backgroundColor:'yellow', scale:1},
     {x:200, y:300, width:40, height:40, backgroundColor:'orange', scale:2}
   ],
-  canvas: {x:0, y:0, width:2000, height:2000, canvasScale:1, backgroundColor:'lightgreen'}
+  canvas: {x:0, y:0, width:2000, height:2000, canvasScale:1, backgroundColor:'lightgreen'},
+  settings: {canvasMoveDelta: 2, canvasZoomDegree: 0.0005}
 };
 
 export default function blocks(state = initialState, action) {
+  let x, y
+
   switch (action.type) {
-  case ADD_TODO:
-    return [{
-      id: (state.length === 0) ? 0 : state[0].id + 1,
-      marked: false,
-      text: action.text
-    }, ...state];
 
-  case DELETE_TODO:
-    return state.filter(todo =>
-      todo.id !== action.id
-    );
+    case types.CHART_ZOOM: //@todo [юзабилити][отдалённое] Нам нужна ещё настройка, -насколько увеличить чат... может как-то от браузера получать эту информацию - когда зумишь, в правом верхнем углу пишется на сколько (это если не отменил стандартное поведение) и формулы были бы проще?
+      //@todo [произвоительность] [юзабилити] action.DeltaY содержит число, возможно связанное со скоросью скроллинга в браузере.
+      // А его знак показывает его навправление: e.deltaY < 0 ? 'вверх' : 'вниз'
+      // Заметил, что число бывает разное - смотрел в Хроме. Но только двух видов: 100, 200, -100б -200
+      // Вдруг в разных браузерах оно разное?
+      // Возможно, лучше сюда присылать только направление - вверх или вниз и мы на что-то стандартное увеличим или уменьшим canvasScale
+      // Сейчас же ещё и умножение производится, что наверное более длительная операция по сравнению со сложением
+      return {
+        ...state,
+        canvas: {
+          ...state.canvas,
+          canvasScale: state.canvas.canvasScale + action.deltaY * state.settings.canvasZoomDegree
+        }};
 
-  case EDIT_TODO:
-    return state.map(todo =>
-      todo.id === action.id ?
-        { ...todo, text: action.text } :
-        todo
-    );
+  case types.CHART_MOVE: //@todo [юзабилити][отдалённое] Нам нужна ещё настройка, -насколько сдвинуть чат... может как-то от браузера получать эту информацию - когда зумишь, в правом верхнем углу пишется на сколько (это если не отменил стандартное поведение) и формулы были бы проще (можно было бы две цифры передавать - вправо и влево)?
+    x = state.canvas.x;
+    y = state.canvas.y;
+    if ( 'left' == action.direction ) {
+      x = x - state.settings.canvasMoveDelta
+    } else if ( 'right' == action.direction ) {
+      x = x + state.settings.canvasMoveDelta
+    } else if ( 'up' == action.direction ) {
+      y = y - state.settings.canvasMoveDelta
+    } else {
+      y = y + state.settings.canvasMoveDelta
+    }
 
-  case MARK_TODO:
-    return state.map(todo =>
-      todo.id === action.id ?
-        { ...todo, marked: !todo.marked } :
-        todo
-    );
+    return {
+      ...state,
+      canvas: {
+        ...state.canvas,
+        x: state.canvas.canvasScale + ( action.isZoomIn ? (-0.02 ) : 0.02 )
+      }};
 
-  case MARK_ALL:
-    const areAllMarked = state.every(todo => todo.marked);
-    return state.map(todo => ({
-      ...todo,
-      marked: !areAllMarked
-    }));
-
-  case CLEAR_MARKED:
-    return state.filter(todo => todo.marked === false);
 
   default:
     return state;
