@@ -28,8 +28,8 @@ export default function blocks(state = initialState, action) {
     case types.MOUSE_MOVE:
       //@todo [юзабилити] [средняя срочность] Мышью таскает с зависаниями. Это очень стрёмно (
       blocks = {...state.blocks}
-      blocks[state.dragging.elId].x = blocks[state.dragging.elId].x + action.mouseX - state.dragging.mouseX;
-      blocks[state.dragging.elId].y = blocks[state.dragging.elId].y + action.mouseY - state.dragging.mouseY;
+      blocks[state.dragging.elId].x = blocks[state.dragging.elId].x + (action.mouseX - state.dragging.mouseX)/state.canvas.canvasScale;
+      blocks[state.dragging.elId].y = blocks[state.dragging.elId].y + (action.mouseY - state.dragging.mouseY)/state.canvas.canvasScale;
       return {
         ...state,
         blocks,
@@ -45,7 +45,7 @@ export default function blocks(state = initialState, action) {
         ...state,
         dragging: { elType: action.elType, elId: action.elId, mouseX: action.mouseX, mouseY: action.mouseY }
       }
-/*
+
     case types.CHART_ZOOM: //@todo [юзабилити][отдалённое] Нам нужна ещё настройка, -насколько увеличить чат... может как-то от браузера получать эту информацию - когда зумишь, в правом верхнем углу пишется на сколько (это если не отменил стандартное поведение) и формулы были бы проще?
       //@todo [произвоительность] [юзабилити] action.DeltaY содержит число, возможно связанное со скоросью скроллинга в браузере.
       // А его знак показывает его навправление: e.deltaY < 0 ? 'вверх' : 'вниз'
@@ -80,7 +80,7 @@ export default function blocks(state = initialState, action) {
         x: state.canvas.canvasScale + ( action.isZoomIn ? (-0.02 ) : 0.02 )
       }};
 
-*/
+
   default:
     return state;
   }
