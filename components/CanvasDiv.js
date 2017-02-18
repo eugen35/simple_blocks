@@ -11,13 +11,17 @@ export default class Canvas extends Component {
     //@todo Нужно ещё координаты канваса прокинуть сюда
     //@todo Возможно canvasScale на координаты канваса тоже не так нужно умножать
     const { canvas, blocks  } = this.props.blockChat
-    const blockItems = blocks.map((block, index) =>
-      <Block key = {index}
-             x={block.x} y={block.y}
-             width = {block.width} height = {block.height}
-             scale = { block.scale }
-             canvasScale = { canvas.canvasScale }
-             backgroundColor = {block.backgroundColor}
+    const  elMouseDown = this.props.elMouseDown
+    const blockItems = Object.keys(blocks).map((id) =>
+      <Block
+        elMouseDown = {elMouseDown}
+        key = {id}
+        id = {id}
+        x={blocks[id].x} y={blocks[id].y}
+        width = {blocks[id].width} height = {blocks[id].height}
+        scale = { blocks[id].scale }
+        canvasScale = { canvas.canvasScale }
+        backgroundColor = {blocks[id].backgroundColor}
       />
     )
     return (

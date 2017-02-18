@@ -18,6 +18,9 @@ export default class AppWindow extends Component {
     //Диаграмму двигаем только при нажатой клавише ctrl
     //if ( e.ctrlKey ) this.props.blockChartActions.chartMove({clientX: e.clientX, clientY: e.clientY})
     //console.log('Координаты', e.clientX, ' ', e.clientY);
+    if ( undefined != this.props.blockChat.dragging.elType ) {
+      this.props.blockChartActions.mouseMove({clientX:e.clientX, clientY:e.clientY})
+    }
   }
 
 
@@ -25,20 +28,28 @@ export default class AppWindow extends Component {
   //Вот сниппет, взятый за основу https://jsfiddle.net/eqcfgaz8/
   render() {
     const { blockChat } = this.props
-    console.log('ffffffbffffffffffffffffffffflockChat');
-    console.log(blockChat);
+    const elMouseDown  = this.props.blockChartActions.elMouseDown
+    let mouseMove, mouseUp
+    if (undefined == blockChat.dragging.elType) {
+      mouseMove = ()=>{return null}
+      mouseUp = ()=>{return null}
+    } else {
+      mouseMove  = this.props.blockChartActions.mouseMove;
+      mouseUp  = this.props.blockChartActions.mouseUp;
+    }
     return (
         <div
-          style={{
+          onMouseUp = {mouseUp}
+          onMouseMove = {this.handleMouseMove}
+          onWheel = {this.handleWheel}
+          style = {{
             display: 'flex',
             flexFlow: 'column',
             height: '80%',
             backgroundColor: 'yellow'
-          }}
-          onMouseMove={this.handleMouseMove}
-          onWheel={this.handleWheel} >
+          }}>
           <NavToolBar/>
-          <CanvasView blockChat={blockChat}/>
+          <CanvasView blockChat={blockChat} elMouseDown={elMouseDown}/>
         </div>
     );
   }

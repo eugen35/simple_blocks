@@ -8,3 +8,7 @@ export const CLEAR_MARKED = 'CLEAR_MARKED';
 
 export const CHART_ZOOM = 'CHART_ZOOM';
 export const CHART_MOVE = 'CHART_MOVE';
+
+export const MOUSE_MOVE = 'MOUSE_MOVE';
+export const MOUSE_UP = 'MOUSE_UP';
+export const EL_MOUSE_DOWN = 'EL_MOUSE_DOWN';

@@ -15,4 +15,26 @@ export function chartMove({ clientX, clientY }) {
   };
 }
 
+export function elMouseDown({clientX, clientY, elType, elId}) {
+  return {
+    type: types.EL_MOUSE_DOWN,
+    elType,
+    elId,
+    mouseX: clientX,
+    mouseY: clientY
+  };
+}
+export function mouseUp(e) {
+  return {
+    type: types.MOUSE_UP
+  }
+}
+export function mouseMove(e) {
+  return {
+    type: types.MOUSE_MOVE,
+    mouseX: e.clientX,
+    mouseY: e.clientY
+  }
+};
+
 
