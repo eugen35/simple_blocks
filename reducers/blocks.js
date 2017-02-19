@@ -118,7 +118,13 @@ export default function blocks(state = initialState, action) {
       ...state,
       blocks
     };
-
+  case types.EL_SHIFT_AND_DOUBLE_CLICK:
+    blocks = {...state.blocks}
+    delete blocks[action.elId]
+    return {
+      ...state,
+      blocks
+    };
 
   default:
     return state;

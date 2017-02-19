@@ -43,6 +43,13 @@ export function elDoubleClick({elType, elId}) {
     elId
   };
 }
+export function elShiftAndDoubleClick({elType, elId}) {
+  return {
+    type: types.EL_SHIFT_AND_DOUBLE_CLICK,
+    elType,
+    elId
+  };
+}
 
 export function textAreaChange(event) {
   return {

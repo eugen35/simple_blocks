@@ -15,6 +15,7 @@ export const MOUSE_UP = 'MOUSE_UP';
 export const EL_MOUSE_DOWN = 'EL_MOUSE_DOWN';
 
 export const EL_DOUBLE_CLICK = 'EL_DOUBLE_CLICK';
+export const EL_SHIFT_AND_DOUBLE_CLICK = 'EL_SHIFT_AND_DOUBLE_CLICK';
 
 export const TEXTAREA_CHANGE = 'TEXTAREA_CHANGE';
 export const TEXTAREA_BLUR = 'TEXTAREA_BLUR';

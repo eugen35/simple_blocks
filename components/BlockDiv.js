@@ -7,11 +7,18 @@ export default class Block extends Component {
   render() {
     const { id, x, y, width, height, backgroundColor, scale, text, canvasScale } = this.props
     //@todo [юзабилити] [средняя срочность] При увеличении canvasScale - координаты должны изменяться в зависомости от того, где див размещён (и от его размера)
-    const  { elMouseDown, elDoubleClick } = this.props.blockChartActions
+    const  { elMouseDown, elDoubleClick, elShiftAndDoubleClick } = this.props.blockChartActions
     return (
       <div
         onMouseDown = {(e)=>elMouseDown({clientX: e.clientX, clientY: e.clientY, elType:'block', elId: id})}
-        onDoubleClick = {(e)=>{e.stopPropagation(); elDoubleClick({elType:'block', elId: id})}}
+        onDoubleClick = {(e)=>{
+          e.stopPropagation();
+          if (e.shiftKey) {
+            elShiftAndDoubleClick({elType:'block', elId: id});
+          } else {
+            elDoubleClick({elType:'block', elId: id});
+          }
+        }}
         style = {{
           borderColor: 'red', border:'solid',
           top: y * canvasScale, left: x * canvasScale,
