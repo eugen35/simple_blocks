@@ -8,12 +8,7 @@ export function chartZoomIn(deltaY) {
   };
 }
 
-export function chartMove({ clientX, clientY }) {
-  return {
-    type: types.CHART_MOVE,
-    moveInfo: { deltaX, deltaY }
-  };
-}
+
 
 export function elMouseDown({clientX, clientY, elType, elId}) {
   return {

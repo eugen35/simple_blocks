@@ -13,7 +13,7 @@ export default class Canvas extends Component {
     //@todo Возможно canvasScale на координаты канваса тоже не так нужно умножать
     const { canvas, blocks, textArea  } = this.props.blockChat
     const blockChartActions = this.props.blockChartActions
-    const chartDoubleClick = blockChartActions.chartDoubleClick
+    const {chartDoubleClick, elMouseDown} = this.props.blockChartActions
     let textAreaInfo=textArea
     let textAreaX, textAreaY, textAreaWidth, textAreaHeight, textAreaScale
     if (undefined != textArea) {
@@ -38,8 +38,12 @@ export default class Canvas extends Component {
     )
     return (
       <div
+        onMouseDown = {(e)=>elMouseDown({clientX: e.clientX, clientY: e.clientY, elType:'canvas'})}
         onDoubleClick = {chartDoubleClick}
         style={{
+          left: canvas.x,
+          top: canvas.y,
+          position: 'absolute',
           width: canvas.width * canvas.canvasScale,
           height: canvas.height * canvas.canvasScale,
           backgroundColor: canvas.backgroundColor,

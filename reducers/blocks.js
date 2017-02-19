@@ -10,7 +10,7 @@ const initialState = {
     "1": {x:100, y:150, width:50, height:50, backgroundColor:randomcolor({luminosity: 'light'}), scale:1, text:'Блок1'},
     "2": {x:200, y:300, width:40, height:40, backgroundColor:randomcolor({luminosity: 'light'}), scale:1, text:'Блок2'},
   },
-  canvas: {x:0, y:0, width:2000, height:2000, canvasScale:1, backgroundColor:'lightgreen'},
+  canvas: {x:100, y:100, width:300, height:300, canvasScale:1, backgroundColor:'lightgreen'},
   settings: {canvasMoveDelta: 2, canvasZoomDegree: 0.0005},
   dragging: getInitialDragging(),
   selection: [],
@@ -30,19 +30,37 @@ export default function blocks(state = initialState, action) {
 
 
     case types.MOUSE_MOVE:
-      //@todo [юзабилити] [средняя срочность] Мышью таскает с зависаниями. Это очень стрёмно (
-      blocks = {...state.blocks}
-      blocks[state.dragging.elId].x = blocks[state.dragging.elId].x + (action.mouseX - state.dragging.mouseX)/state.canvas.canvasScale;
-      blocks[state.dragging.elId].y = blocks[state.dragging.elId].y + (action.mouseY - state.dragging.mouseY)/state.canvas.canvasScale;
-      return {
-        ...state,
-        blocks,
-        dragging: {
-          ...state.dragging,
-          mouseX: action.mouseX,
-          mouseY: action.mouseY,
+      //@todo [юзабилити] [средняя срочность] Мышью таскает с зависаниями. Это очень стрёмно ( Можно пробовать таскать автар (менять в этот момент иконку мыши на прямоугольник с мышкой, - тогда отрисовка вообще не нужна) А если без аватара, то можно вызывать событие таскание с интервалом в 0.03 секунды. Тогда будет хоть реже перерисовываться
+      if ('canvas' == state.dragging.elType) {
+        console.log('ДВИГАЮ КАНВАС')
+        return {
+          ...state,
+          canvas:{
+            ...state.canvas,
+            x: state.canvas.x + (action.mouseX - state.dragging.mouseX)/state.canvas.canvasScale,
+            y: state.canvas.y + (action.mouseY - state.dragging.mouseY)/state.canvas.canvasScale
+          },
+          dragging: {
+            ...state.dragging,
+            mouseX: action.mouseX,
+            mouseY: action.mouseY,
+          }
+        }
+      } else {
+        blocks = {...state.blocks}
+        blocks[state.dragging.elId].x = blocks[state.dragging.elId].x + (action.mouseX - state.dragging.mouseX)/state.canvas.canvasScale;
+        blocks[state.dragging.elId].y = blocks[state.dragging.elId].y + (action.mouseY - state.dragging.mouseY)/state.canvas.canvasScale;
+        return {
+          ...state,
+          blocks,
+          dragging: {
+            ...state.dragging,
+            mouseX: action.mouseX,
+            mouseY: action.mouseY,
+          }
         }
       }
+
 
     case types.EL_MOUSE_DOWN:
       return {
@@ -84,25 +102,7 @@ export default function blocks(state = initialState, action) {
           canvasScale: state.canvas.canvasScale + action.deltaY * state.settings.canvasZoomDegree
         }};
 
-  case types.CHART_MOVE: //@todo [юзабилити][отдалённое] Нам нужна ещё настройка, -насколько сдвинуть чат... может как-то от браузера получать эту информацию - когда зумишь, в правом верхнем углу пишется на сколько (это если не отменил стандартное поведение) и формулы были бы проще (можно было бы две цифры передавать - вправо и влево)?
-    x = state.canvas.x;
-    y = state.canvas.y;
-    if ( 'left' == action.direction ) {
-      x = x - state.settings.canvasMoveDelta
-    } else if ( 'right' == action.direction ) {
-      x = x + state.settings.canvasMoveDelta
-    } else if ( 'up' == action.direction ) {
-      y = y - state.settings.canvasMoveDelta
-    } else {
-      y = y + state.settings.canvasMoveDelta
-    }
 
-    return {
-      ...state,
-      canvas: {
-        ...state.canvas,
-        x: state.canvas.canvasScale + ( action.isZoomIn ? (-0.02 ) : 0.02 )
-      }};
 
   case types.CHART_DOUBLE_CLICK:
     blocks = {...state.blocks}

@@ -10,7 +10,10 @@ export default class Block extends Component {
     const  { elMouseDown, elDoubleClick, elShiftAndDoubleClick } = this.props.blockChartActions
     return (
       <div
-        onMouseDown = {(e)=>elMouseDown({clientX: e.clientX, clientY: e.clientY, elType:'block', elId: id})}
+        onMouseDown = {(e)=>{
+          e.stopPropagation();
+          elMouseDown({clientX: e.clientX, clientY: e.clientY, elType:'block', elId: id});
+        }}
         onDoubleClick = {(e)=>{
           e.stopPropagation();
           if (e.shiftKey) {
