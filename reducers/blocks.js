@@ -10,7 +10,7 @@ const initialState = {
     "1": {x:100, y:150, width:50, height:50, backgroundColor:randomcolor({luminosity: 'light'}), scale:1, text:'Блок1'},
     "2": {x:200, y:300, width:40, height:40, backgroundColor:randomcolor({luminosity: 'light'}), scale:1, text:'Блок2'},
   },
-  canvas: {x:100, y:100, width:300, height:300, canvasScale:1, backgroundColor:'lightgreen'},
+  canvas: {x:0, y:0, width:300, height:300, canvasScale:1, backgroundColor:'lightgreen'},
   settings: {canvasMoveDelta: 2, canvasZoomDegree: 0.0005},
   dragging: getInitialDragging(),
   selection: [],
@@ -31,22 +31,6 @@ export default function blocks(state = initialState, action) {
 
     case types.MOUSE_MOVE:
       //@todo [юзабилити] [средняя срочность] Мышью таскает с зависаниями. Это очень стрёмно ( Можно пробовать таскать автар (менять в этот момент иконку мыши на прямоугольник с мышкой, - тогда отрисовка вообще не нужна) А если без аватара, то можно вызывать событие таскание с интервалом в 0.03 секунды. Тогда будет хоть реже перерисовываться
-      if ('canvas' == state.dragging.elType) {
-        console.log('ДВИГАЮ КАНВАС')
-        return {
-          ...state,
-          canvas:{
-            ...state.canvas,
-            x: state.canvas.x + (action.mouseX - state.dragging.mouseX)/state.canvas.canvasScale,
-            y: state.canvas.y + (action.mouseY - state.dragging.mouseY)/state.canvas.canvasScale
-          },
-          dragging: {
-            ...state.dragging,
-            mouseX: action.mouseX,
-            mouseY: action.mouseY,
-          }
-        }
-      } else {
         blocks = {...state.blocks}
         blocks[state.dragging.elId].x = blocks[state.dragging.elId].x + (action.mouseX - state.dragging.mouseX)/state.canvas.canvasScale;
         blocks[state.dragging.elId].y = blocks[state.dragging.elId].y + (action.mouseY - state.dragging.mouseY)/state.canvas.canvasScale;
@@ -59,8 +43,32 @@ export default function blocks(state = initialState, action) {
             mouseY: action.mouseY,
           }
         }
-      }
 
+    case types.CHART_MOVE:
+      //@todo [юзабилити] [средняя срочность] Мышью таскает с зависаниями. Это очень стрёмно ( Можно пробовать таскать автар (менять в этот момент иконку мыши на прямоугольник с мышкой, - тогда отрисовка вообще не нужна) А если без аватара, то можно вызывать событие таскание с интервалом в 0.03 секунды. Тогда будет хоть реже перерисовываться
+      if (undefined == state.dragging.mouseX) {
+        return { //При начале движения мыши координаты в state.dragging.mouseX и state.dragging.mouseY отсутствуют
+          ...state,
+          dragging: {
+            ...state.dragging,
+            mouseX: action.mouseX,
+            mouseY: action.mouseY,
+          }
+        }
+      }
+      return {
+          ...state,
+          canvas:{
+            ...state.canvas,
+            x: state.canvas.x - (action.mouseX - state.dragging.mouseX)/state.canvas.canvasScale,
+            y: state.canvas.y - (action.mouseY - state.dragging.mouseY)/state.canvas.canvasScale
+          },
+          dragging: {
+            ...state.dragging,
+            mouseX: action.mouseX,
+            mouseY: action.mouseY,
+          }
+        }
 
     case types.EL_MOUSE_DOWN:
       return {
@@ -103,12 +111,12 @@ export default function blocks(state = initialState, action) {
         }};
 
 
-
+  //@todo Неправильно событие добавления блока называть CHART_DOUBLE_CLICK, - получается, это зависит от вида события! А если я через контекстное меню захочу называть?!
   case types.CHART_DOUBLE_CLICK:
     blocks = {...state.blocks}
     blocks[ genUniqueId() ] = {
-      x: action.x / state.canvas.canvasScale,
-      y:action.y / state.canvas.canvasScale,
+      x: (action.x - state.canvas.x) / state.canvas.canvasScale,
+      y: (action.y - state.canvas.y)/ state.canvas.canvasScale,
       width:50,
       height:50,
       backgroundColor: randomcolor({luminosity: 'light'}),

@@ -8,15 +8,22 @@ export default class CanvasView extends Component {
 
   render() {
     const { blockChat, blockChartActions } = this.props
-
+    const {chartMove, chartDoubleClick} = this.props.blockChartActions
+    //@todo Теперь view содержит ненужные полосы прокрутки... Что-то про них нужно думать
     return (
-        <div style={{
-          flexGrow: 1,
-          flexShrink: 1,
-          flexBasis: 'auto',
-          overflow: 'scroll',
-          backgroundColor: 'lightblue'
-        }}>
+        <div
+          onMouseMove= {(e)=>{
+            if ( e.ctrlKey ) chartMove({clientX: e.clientX, clientY: e.clientY})
+          }}
+          onDoubleClick = {chartDoubleClick}
+          style={{
+            flexGrow: 1,
+            flexShrink: 1,
+            flexBasis: 'auto',
+            overflow: 'scroll',
+            backgroundColor: 'lightblue'
+          }}
+        >
           <CanvasDiv blockChat={blockChat} blockChartActions={blockChartActions}/>
         </div>
 

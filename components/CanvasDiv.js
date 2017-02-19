@@ -13,7 +13,6 @@ export default class Canvas extends Component {
     //@todo Возможно canvasScale на координаты канваса тоже не так нужно умножать
     const { canvas, blocks, textArea  } = this.props.blockChat
     const blockChartActions = this.props.blockChartActions
-    const {chartDoubleClick, elMouseDown} = this.props.blockChartActions
     let textAreaInfo=textArea
     let textAreaX, textAreaY, textAreaWidth, textAreaHeight, textAreaScale
     if (undefined != textArea) {
@@ -36,18 +35,13 @@ export default class Canvas extends Component {
         text = { blocks[id].text }
       />
     )
+    //Сам по себе canvasDiv стал невидимым (и нет в нём событий). Он теперь нужен, только чтобы не ручками считать координаты всех фигур, а таскать их разом, т.к. они его наследники
     return (
       <div
-        onMouseDown = {(e)=>elMouseDown({clientX: e.clientX, clientY: e.clientY, elType:'canvas'})}
-        onDoubleClick = {chartDoubleClick}
         style={{
           left: canvas.x,
           top: canvas.y,
-          position: 'absolute',
-          width: canvas.width * canvas.canvasScale,
-          height: canvas.height * canvas.canvasScale,
-          backgroundColor: canvas.backgroundColor,
-          borderColor: 'yellow', border:'solid'
+          position: 'absolute'
         }}
       >
         { undefined != textAreaInfo &&
