@@ -20,5 +20,7 @@ export const EL_SHIFT_AND_DOUBLE_CLICK = 'EL_SHIFT_AND_DOUBLE_CLICK';
 export const TEXTAREA_CHANGE = 'TEXTAREA_CHANGE';
 export const TEXTAREA_BLUR = 'TEXTAREA_BLUR';
 
+export const FILE_SAVE = 'FILE_SAVE';
+
 
 

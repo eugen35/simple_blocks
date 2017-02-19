@@ -70,3 +70,9 @@ export function chartDoubleClick(e) {
     y: e.nativeEvent.offsetY
   };
 }
+
+export function fileSave() {
+  return {
+    type: types.FILE_SAVE
+  };
+}

@@ -3,6 +3,8 @@ import classnames from 'classnames';
 import TodoTextInput from './TodoTextInput';
 import NavToolBar from './NavToolBar'
 import CanvasView from './CanvasView'
+//Это полифилл. Поэтому мы его цепляем здесь. Он нам нужен на стороне клиента для сохранения файлов на клиенте.. Хотя вызываем мы его в редьюсере
+import FileSaver from 'file-saver';
 
 export default class AppWindow extends Component {
   handleWheel = (e) => {
@@ -48,7 +50,7 @@ export default class AppWindow extends Component {
             height: '80%',
             backgroundColor: 'yellow'
           }}>
-          <NavToolBar/>
+          <NavToolBar blockChartActions={blockChartActions}/>
           <CanvasView blockChat={blockChat} blockChartActions={blockChartActions}/>
         </div>
     );

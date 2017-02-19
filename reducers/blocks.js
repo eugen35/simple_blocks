@@ -1,6 +1,7 @@
 import * as types from '../constants/ActionTypes';
 var randomcolor = require('randomcolor')
 var genUniqueId = require('shortid').generate;
+var FileSaver = require('file-saver');
 
 function getInitialDragging(){return { elType: undefined, elId: undefined, mouseX: undefined, mouseY: undefined } }
 
@@ -125,6 +126,12 @@ export default function blocks(state = initialState, action) {
       ...state,
       blocks
     };
+
+    case types.FILE_SAVE:
+    //Как это работает показано здесь: https://codepen.io/davidelrizzo/pen/cxsGb
+    var blob = new Blob([JSON.stringify(state.blocks, "", 4)], {type: "text/plain;charset=utf-8"});
+    FileSaver.saveAs(blob, "myFile.txt");
+    return state;
 
   default:
     return state;
