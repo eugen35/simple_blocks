@@ -4,13 +4,15 @@ function getInitialDragging(){return { elType: undefined, elId: undefined, mouse
 
 const initialState = {
   blocks:{
-    "1": {x:100, y:150, width:50, height:50, backgroundColor:'yellow', scale:1},
-    "2": {x:200, y:300, width:40, height:40, backgroundColor:'orange', scale:2}
+    "1": {x:100, y:150, width:50, height:50, backgroundColor:'yellow', scale:1, text:'Блок1'},
+    "2": {x:200, y:300, width:40, height:40, backgroundColor:'orange', scale:1, text:'Блок2'},
+    "3": {x:200, y:300, width:40, height:40, backgroundColor:'red', scale:1, text:'Блок3'}
   },
   canvas: {x:0, y:0, width:2000, height:2000, canvasScale:1, backgroundColor:'lightgreen'},
   settings: {canvasMoveDelta: 2, canvasZoomDegree: 0.0005},
   dragging: getInitialDragging(),
-  selection: []
+  selection: [],
+  textArea: undefined
 };
 
 export default function blocks(state = initialState, action) {
@@ -45,6 +47,26 @@ export default function blocks(state = initialState, action) {
         ...state,
         dragging: { elType: action.elType, elId: action.elId, mouseX: action.mouseX, mouseY: action.mouseY }
       }
+
+    case types.EL_DOUBLE_CLICK:
+      return {
+        ...state,
+        textArea: { elType: action.elType, elId: action.elId }
+      };
+
+    case types.TEXTAREA_CHANGE:
+      blocks = {...state.blocks}
+      blocks[ state.textArea.elId ].text = action.text
+      return {
+        ...state,
+        blocks
+      };
+
+    case types.TEXTAREA_BLUR:
+      return {
+        ...state,
+        textArea: undefined
+      };
 
     case types.CHART_ZOOM: //@todo [юзабилити][отдалённое] Нам нужна ещё настройка, -насколько увеличить чат... может как-то от браузера получать эту информацию - когда зумишь, в правом верхнем углу пишется на сколько (это если не отменил стандартное поведение) и формулы были бы проще?
       //@todo [произвоительность] [юзабилити] action.DeltaY содержит число, возможно связанное со скоросью скроллинга в браузере.

@@ -36,5 +36,24 @@ export function mouseMove(e) {
     mouseY: e.clientY
   }
 };
+export function elDoubleClick({elType, elId}) {
+  return {
+    type: types.EL_DOUBLE_CLICK,
+    elType,
+    elId
+  };
+}
+
+export function textAreaChange(event) {
+  return {
+    type: types.TEXTAREA_CHANGE,
+    text: event.target.value
+  };
+}
+export function textAreaBlur() {
+  return {
+    type: types.TEXTAREA_BLUR
+  };
+}
 
 

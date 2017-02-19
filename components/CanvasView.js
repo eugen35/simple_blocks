@@ -7,7 +7,8 @@ export default class CanvasView extends Component {
 
 
   render() {
-    const { blockChat, elMouseDown } = this.props
+    const { blockChat, blockChartActions } = this.props
+
     return (
         <div style={{
           flexGrow: 1,
@@ -16,7 +17,7 @@ export default class CanvasView extends Component {
           overflow: 'scroll',
           backgroundColor: 'lightblue'
         }}>
-          <CanvasDiv blockChat={blockChat} elMouseDown={elMouseDown}/>
+          <CanvasDiv blockChat={blockChat} blockChartActions={blockChartActions}/>
         </div>
 
     );

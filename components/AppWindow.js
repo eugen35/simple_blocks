@@ -27,15 +27,15 @@ export default class AppWindow extends Component {
 
   //Вот сниппет, взятый за основу https://jsfiddle.net/eqcfgaz8/
   render() {
-    const { blockChat } = this.props
-    const elMouseDown  = this.props.blockChartActions.elMouseDown
+    const { blockChat, blockChartActions } = this.props
+
     let mouseMove, mouseUp
     if (undefined == blockChat.dragging.elType) {
       mouseMove = ()=>{return null}
       mouseUp = ()=>{return null}
     } else {
-      mouseMove  = this.props.blockChartActions.mouseMove;
-      mouseUp  = this.props.blockChartActions.mouseUp;
+      mouseMove  = blockChartActions.mouseMove;
+      mouseUp  = blockChartActions.mouseUp;
     }
     return (
         <div
@@ -49,7 +49,7 @@ export default class AppWindow extends Component {
             backgroundColor: 'yellow'
           }}>
           <NavToolBar/>
-          <CanvasView blockChat={blockChat} elMouseDown={elMouseDown}/>
+          <CanvasView blockChat={blockChat} blockChartActions={blockChartActions}/>
         </div>
     );
   }

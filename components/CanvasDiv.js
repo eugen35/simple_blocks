@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import TodoTextInput from './TodoTextInput';
 import Block from './BlockDiv'
+import TextArea from './TextArea'
 
 export default class Canvas extends Component {
 
@@ -10,11 +11,20 @@ export default class Canvas extends Component {
     //@todo [потенциальный bug] [неожиданное поведение] Возможно в этом месте я затираю элемент canvas (встроен в реакт)
     //@todo Нужно ещё координаты канваса прокинуть сюда
     //@todo Возможно canvasScale на координаты канваса тоже не так нужно умножать
-    const { canvas, blocks  } = this.props.blockChat
-    const  elMouseDown = this.props.elMouseDown
+    const { canvas, blocks, textArea  } = this.props.blockChat
+    const blockChartActions = this.props.blockChartActions
+    let textAreaInfo=textArea
+    let textAreaX, textAreaY, textAreaWidth, textAreaHeight, textAreaScale
+    if (undefined != textArea) {
+      textAreaX = this.props.blockChat.blocks[textAreaInfo.elId].x
+      textAreaY = this.props.blockChat.blocks[textAreaInfo.elId].y
+      textAreaWidth = this.props.blockChat.blocks[textAreaInfo.elId].width
+      textAreaHeight = this.props.blockChat.blocks[textAreaInfo.elId].height
+      textAreaScale = this.props.blockChat.blocks[textAreaInfo.elId].scale
+    }
     const blockItems = Object.keys(blocks).map((id) =>
       <Block
-        elMouseDown = {elMouseDown}
+        blockChartActions={blockChartActions}
         key = {id}
         id = {id}
         x={blocks[id].x} y={blocks[id].y}
@@ -22,6 +32,7 @@ export default class Canvas extends Component {
         scale = { blocks[id].scale }
         canvasScale = { canvas.canvasScale }
         backgroundColor = {blocks[id].backgroundColor}
+        text = { blocks[id].text }
       />
     )
     return (
@@ -31,6 +42,18 @@ export default class Canvas extends Component {
         backgroundColor: canvas.backgroundColor,
         borderColor: 'yellow', border:'solid'
       }}>
+        { undefined != textAreaInfo &&
+        <TextArea
+          blockChartActions={blockChartActions}
+          text = {blocks[textAreaInfo.elId].text}
+          x = { textAreaX }
+          y = { textAreaY }
+          scale = { textAreaScale }
+          canvasScale = { canvas.canvasScale }
+          width = {textAreaWidth}
+          height = {textAreaHeight}
+        />
+        }
         { blockItems }
       </div>
     );
