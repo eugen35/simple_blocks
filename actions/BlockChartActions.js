@@ -56,4 +56,10 @@ export function textAreaBlur() {
   };
 }
 
-
+export function chartDoubleClick(e) {
+  return {
+    type: types.CHART_DOUBLE_CLICK,
+    x: e.nativeEvent.offsetX,
+    y: e.nativeEvent.offsetY
+  };
+}

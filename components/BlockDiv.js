@@ -11,7 +11,7 @@ export default class Block extends Component {
     return (
       <div
         onMouseDown = {(e)=>elMouseDown({clientX: e.clientX, clientY: e.clientY, elType:'block', elId: id})}
-        onDoubleClick = {()=>elDoubleClick({elType:'block', elId: id})}
+        onDoubleClick = {(e)=>{e.stopPropagation(); elDoubleClick({elType:'block', elId: id})}}
         style = {{
           borderColor: 'red', border:'solid',
           top: y * canvasScale, left: x * canvasScale,

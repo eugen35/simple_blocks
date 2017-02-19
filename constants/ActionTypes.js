@@ -8,6 +8,7 @@ export const CLEAR_MARKED = 'CLEAR_MARKED';
 
 export const CHART_ZOOM = 'CHART_ZOOM';
 export const CHART_MOVE = 'CHART_MOVE';
+export const CHART_DOUBLE_CLICK = 'CHART_DOUBLE_CLICK';
 
 export const MOUSE_MOVE = 'MOUSE_MOVE';
 export const MOUSE_UP = 'MOUSE_UP';
@@ -17,3 +18,6 @@ export const EL_DOUBLE_CLICK = 'EL_DOUBLE_CLICK';
 
 export const TEXTAREA_CHANGE = 'TEXTAREA_CHANGE';
 export const TEXTAREA_BLUR = 'TEXTAREA_BLUR';
+
+
+

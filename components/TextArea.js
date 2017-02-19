@@ -6,8 +6,6 @@ export default class TextArea extends Component {
   render() {
     const { text, x, y, canvasScale, width, height, scale } = this.props
     const {textAreaChange, textAreaBlur } = this.props.blockChartActions
-    console.log('ПЫТАЮСЬ НАПРИСОВАТЬ:', x, ' ', y)
-    console.log('ПЫТАЮСЬ НАПРИСОВАТЬ:', x, ' ', y)
     return (
       <textarea
         autoFocus

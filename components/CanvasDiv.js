@@ -13,6 +13,7 @@ export default class Canvas extends Component {
     //@todo Возможно canvasScale на координаты канваса тоже не так нужно умножать
     const { canvas, blocks, textArea  } = this.props.blockChat
     const blockChartActions = this.props.blockChartActions
+    const chartDoubleClick = blockChartActions.chartDoubleClick
     let textAreaInfo=textArea
     let textAreaX, textAreaY, textAreaWidth, textAreaHeight, textAreaScale
     if (undefined != textArea) {
@@ -36,12 +37,15 @@ export default class Canvas extends Component {
       />
     )
     return (
-      <div style={{
-        width: canvas.width * canvas.canvasScale,
-        height: canvas.height * canvas.canvasScale,
-        backgroundColor: canvas.backgroundColor,
-        borderColor: 'yellow', border:'solid'
-      }}>
+      <div
+        onDoubleClick = {chartDoubleClick}
+        style={{
+          width: canvas.width * canvas.canvasScale,
+          height: canvas.height * canvas.canvasScale,
+          backgroundColor: canvas.backgroundColor,
+          borderColor: 'yellow', border:'solid'
+        }}
+      >
         { undefined != textAreaInfo &&
         <TextArea
           blockChartActions={blockChartActions}

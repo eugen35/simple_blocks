@@ -1,12 +1,13 @@
 import * as types from '../constants/ActionTypes';
+var randomcolor = require('randomcolor')
+var genUniqueId = require('shortid').generate;
 
 function getInitialDragging(){return { elType: undefined, elId: undefined, mouseX: undefined, mouseY: undefined } }
 
 const initialState = {
   blocks:{
-    "1": {x:100, y:150, width:50, height:50, backgroundColor:'yellow', scale:1, text:'Блок1'},
-    "2": {x:200, y:300, width:40, height:40, backgroundColor:'orange', scale:1, text:'Блок2'},
-    "3": {x:200, y:300, width:40, height:40, backgroundColor:'red', scale:1, text:'Блок3'}
+    "1": {x:100, y:150, width:50, height:50, backgroundColor:randomcolor({luminosity: 'light'}), scale:1, text:'Блок1'},
+    "2": {x:200, y:300, width:40, height:40, backgroundColor:randomcolor({luminosity: 'light'}), scale:1, text:'Блок2'},
   },
   canvas: {x:0, y:0, width:2000, height:2000, canvasScale:1, backgroundColor:'lightgreen'},
   settings: {canvasMoveDelta: 2, canvasZoomDegree: 0.0005},
@@ -16,7 +17,7 @@ const initialState = {
 };
 
 export default function blocks(state = initialState, action) {
-  let x, y
+  let x, y, id
 
   switch (action.type) {
 
@@ -101,6 +102,22 @@ export default function blocks(state = initialState, action) {
         ...state.canvas,
         x: state.canvas.canvasScale + ( action.isZoomIn ? (-0.02 ) : 0.02 )
       }};
+
+  case types.CHART_DOUBLE_CLICK:
+    blocks = {...state.blocks}
+    blocks[ genUniqueId() ] = {
+      x: action.x / state.canvas.canvasScale,
+      y:action.y / state.canvas.canvasScale,
+      width:50,
+      height:50,
+      backgroundColor: randomcolor({luminosity: 'light'}),
+      scale:1,
+      text:''
+    }
+    return {
+      ...state,
+      blocks
+    };
 
 
   default:
